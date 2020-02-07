@@ -29,6 +29,26 @@ function addTransaction(transaction) {
   list.appendChild(item);
 }
 
+function submitTransaction(e) {
+  e.preventDefault();
+
+  if (text.value.trim() === '' || amount.value.trim() === '') {
+    alert('Please enter a text and amount');
+  }
+
+  const transaction = {
+    id: Math.floor(Math.random() * 1000000),
+    text: text.value,
+    amount: +amount.value
+  };
+
+  transactions.push(transaction);
+  addTransaction(transaction);
+  updateValues();
+  text.value = '';
+  amount.value = '';
+}
+
 // TOTAL INCOME
 function updateValues() {
   const amounts = transactions.map(transaction => transaction.amount);
@@ -56,3 +76,5 @@ function init() {
   updateValues();
 }
 init();
+
+form.addEventListener('submit', submitTransaction);

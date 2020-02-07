@@ -27,7 +27,24 @@ function addTransaction(transaction) {
   list.appendChild(item);
 }
 
+// TOTAL INCOME
+function updateValues() {
+  const amounts = transactions.map(transaction => transaction.amount);
+  const total = amounts.reduce((acc, val) => acc + val, 0).toFixed(2);
+  const income = amounts
+    .filter(amt => amt > 0)
+    .reduce((acc, val) => acc + val, 0)
+    .toFixed(2);
+  const expense = (
+    amounts.filter(amt => amt < 0).reduce((acc, val) => acc + val, 0) * -1
+  ).toFixed(2);
+  money_plus.innerHTML = `$${income}`;
+  money_minus.innerHTML = `$${expense}`;
+  balance.innerHTML = `$${total}`;
+}
+
 (function init() {
   list.innerHTML = '';
   transactions.forEach(addTransaction);
+  updateValues();
 })();
